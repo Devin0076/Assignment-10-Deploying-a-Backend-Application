@@ -1,13 +1,13 @@
 # Task Management API
 
 ## Deployment URL
-Deployed API will be available at:
+Deployed API is available at:
 
-
-URL placeholder
-
+**https://assignment10-api.onrender.com**
 
 A REST API for managing tasks with user authentication, built with Node.js, Express, and SQLite.
+
+
 
 ## Features
 
@@ -15,151 +15,143 @@ A REST API for managing tasks with user authentication, built with Node.js, Expr
 - JWT-based authentication
 - CRUD operations for tasks
 - User-specific task management
-- SQLite database with Sequelize ORM
+- SQLite database using Sequelize ORM
+
+
 
 ## API Endpoints
 
 ### Authentication
-- `POST /api/register` - Register a new user
-- `POST /api/login` - Login user
+- POST /api/register — Register a new user
+- POST /api/login — Login user and receive JWT token
 
 ### Tasks (Protected Routes)
-- `GET /api/tasks` - Get all tasks for authenticated user
-- `GET /api/tasks/:id` - Get single task
-- `POST /api/tasks` - Create new task
-- `PUT /api/tasks/:id` - Update task
-- `DELETE /api/tasks/:id` - Delete task
+- GET /api/tasks — Get all tasks for authenticated user
+- GET /api/tasks/:id — Get a single task
+- POST /api/tasks — Create new task
+- PUT /api/tasks/:id — Update an existing task
+- DELETE /api/tasks/:id — Delete a task
 
 ### Utility
-- `GET /health` - Health check endpoint
-- `GET /` - API information
+- GET /health — Basic server health check
+- GET /api/health — API health, uptime, environment
+- GET / — API root information
+
+
 
 ## Testing in Production
 
-Once deployed, I will test the API using Postman.
-
-
+Use Postman to test the deployed API.
 
 ### Health Check
-
-GET https://placeholder-app-name.onrender.com/health
+    GET https://assignment10-api.onrender.com/health
 
 ### API Health
-GET https://placeholder-app-name.onrender.com/api/health
+    GET https://assignment10-api.onrender.com/api/health
 
 ### Register
-POST https://placeholder-app-name.onrender.com/api/register
-Content-Type: application/json
+    POST https://assignment10-api.onrender.com/api/register
+    Content-Type: application/json
 
 ### Login
-POST https://placeholder-app-name.onrender.com/api/login
-Content-Type: application/json
+    POST https://assignment10-api.onrender.com/api/login
+    Content-Type: application/json
 
 ### Get Tasks (requires JWT)
-GET https://placeholder-app-name.onrender.com/api/tasks
-Authorization: Bearer YOUR_JWT_TOKEN
+    GET https://assignment10-api.onrender.com/api/tasks
+    Authorization: Bearer YOUR_JWT_TOKEN
+
+
 
 ## Local Development
 
 1. Install dependencies:
-   ```bash
-   npm install
-   ```
+
+        npm install
+
 2. Seed the database (optional):
-    ```bash
-    npm run seed
-    ```
+
+        npm run seed
+
 3. Start the server:
-    ```bash
-    npm start
-    ``
-4. The API will be available at `http://localhost:3000`
 
-### Sample Users
-If you run the seed script, you'll have these test users available:
-- **john@example.com** / password123 (3 tasks)
-- **jane@example.com** / password123 (3 tasks)
-- **mike@example.com** / password123 (4 tasks)
+        npm start
 
-You can use these accounts to test the API without having to register new users.
+4. API available at:
 
-### Testing
-Use the following sample requests to test the API:
-
-**Register a user:**
-
-```bash
-POST /api/register
-Content-Type: application/json
-
-{
-  "name": "John Doe",
-  "email": "john@example.com",
-  "password": "password123"
-}
-```
-
-**Login:**
-
-```bash
-POST /api/login
-Content-Type: application/json
-
-{
-  "email": "john@example.com",
-  "password": "password123"
-}
-```
-
-**Create a task (requires authentication):**
-```bash
-POST /api/tasks
-Content-Type: application/json
-Authorization: Bearer YOUR_JWT_TOKEN
-
-{
-  "title": "Complete project",
-  "description": "Finish the task management API",
-  "priority": "high"
-}
-```
-
-### Database
-This API uses SQLite for simplicity. The database file (tasks.db) will be created automatically when you start the server.
-**Note for deployment**: SQLite databases on platforms like Render will reset when containers restart. For persistent storage in production, consider upgrading to PostgreSQL.
-
-### Environment Variables
-- `NODE_ENV` - Environment (development/production)
-- `PORT` - Server port (default: 3000)
-- `JWT_SECRET` - Secret key for JWT tokens
-- `JWT_EXPIRES_IN` - JWT token expiration time
-- `DB_NAME` - Database file name
-
-## Environment Variables (Production)
-
-These must be configured in the Render dashboard:
-
-- `NODE_ENV=production`
-- `PORT=3000` (Render may override this automatically)
-- `JWT_SECRET=your-secure-production-key`
-- `JWT_EXPIRES_IN=24h`
-- `DB_NAME=tasks.db`
+        http://localhost:3000
 
 
-### Deployment
-This API is ready to deploy to cloud platforms like Render. Make sure to:
-1. Set appropriate environment variables
-2. Use a secure JWT secret in production
-3. Consider database limitations with SQLite
+
+## Sample Users (if seeded)
+
+- john@example.com / password123  
+- jane@example.com / password123  
+- mike@example.com / password123  
+
+Seeded by running:
+
+        npm run seed
+
+
+
+## Database
+
+This API uses a local SQLite database for simplicity.
+
+Note: On Render, SQLite storage resets when the container restarts.
+For real production use, switch to PostgreSQL.
+
+
+
+## Environment Variables
+
+### Local Development (.env)
+
+    NODE_ENV=development
+    PORT=3000
+    JWT_SECRET=your-dev-secret
+    JWT_EXPIRES_IN=24h
+    DB_NAME=tasks.db
+
+### Production (Render Dashboard)
+
+    NODE_ENV=production
+    PORT=3000
+    JWT_SECRET=your-secure-production-key
+    JWT_EXPIRES_IN=24h
+    DB_NAME=tasks.db
+
+
+
+## Deployment Notes
+
+This API is deployed to Render using:
+
+- Build command: npm install
+- Start command: npm start
+
+Ensure:
+
+1. package.json start script runs server.js
+2. CORS is enabled in server.js
+3. Environment variables are correctly configured in Render
+
 
 
 ## Auto-Deploy Verification
 
-Render automatically redeploys whenever you push to the deployed branch.
+Render automatically redeploys when you push to the deployed branch.
 
 To verify auto-deployment:
 
-1. Add or modify a small endpoint (for example, `/api/health`)
-2. Commit and push the change to GitHub
-3. Watch Render’s “Deploy Logs” tab to see the new build start
-4. Once live, test the updated endpoint in Postman to confirm changes deployed successfully
+1. Modify a small part of the code (example: change the message in /api/health)
+2. Commit and push:
+
+        git add .
+        git commit -m "Test auto-deploy with updated API health message"
+        git push
+
+3. Watch the Render Deploy Logs for a new build
+4. Call the updated endpoint and confirm the change is live
+
