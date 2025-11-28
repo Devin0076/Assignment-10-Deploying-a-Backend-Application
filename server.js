@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -9,6 +10,7 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
+app.use(cors());
 
 // JWT Authentication Middleware
 function requireAuth(req, res, next) {
