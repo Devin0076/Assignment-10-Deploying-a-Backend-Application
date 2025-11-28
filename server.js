@@ -45,17 +45,7 @@ function requireAuth(req, res, next) {
     }
 }
 
-// Test database connection
-async function testConnection() {
-    try {
-        await db.authenticate();
-        console.log('Connection to database established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
-}
 
-testConnection();
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -342,7 +332,10 @@ app.delete('/api/tasks/:id', requireAuth, async (req, res) => {
 
 // Error handling middleware
 app.use((err, req, res, next) => {
+    if (process.env.NODE_ENV === "development") {
     console.error('Unhandled error:', err);
+}
+
     res.status(500).json({ 
         error: 'Internal server error',
         message: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong'
@@ -359,7 +352,7 @@ app.use((req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Server running on port http://localhost:${PORT}`);
-    console.log(`Environment: ${process.env.NODE_ENV}`);
-    console.log(`Health check: http://localhost:${PORT}/health`);
+    console.log(`Server running on port ${PORT}`);
+    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`Health check avalible at /health`);
 });
