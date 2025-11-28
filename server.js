@@ -61,7 +61,7 @@ app.get('/health', (req, res) => {
 app.get('/api/health', (req, res) => {
     res.json({
         status: 'OK',
-        message: 'Task Management API is healthy',
+        message: 'Task Management API is healthy and deployed to Render',
         version: '1.0.0',
         environment: process.env.NODE_ENV,
         uptime: process.uptime(),
