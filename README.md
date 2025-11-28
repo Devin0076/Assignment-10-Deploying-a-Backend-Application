@@ -1,5 +1,12 @@
 # Task Management API
 
+## Deployment URL
+Deployed API will be available at:
+
+
+URL placeholder
+
+
 A REST API for managing tasks with user authentication, built with Node.js, Express, and SQLite.
 
 ## Features
@@ -26,6 +33,31 @@ A REST API for managing tasks with user authentication, built with Node.js, Expr
 ### Utility
 - `GET /health` - Health check endpoint
 - `GET /` - API information
+
+## Testing in Production
+
+Once deployed, I will test the API using Postman.
+
+
+
+### Health Check
+
+GET https://placeholder-app-name.onrender.com/health
+
+### API Health
+GET https://placeholder-app-name.onrender.com/api/health
+
+### Register
+POST https://placeholder-app-name.onrender.com/api/register
+Content-Type: application/json
+
+### Login
+POST https://placeholder-app-name.onrender.com/api/login
+Content-Type: application/json
+
+### Get Tasks (requires JWT)
+GET https://placeholder-app-name.onrender.com/api/tasks
+Authorization: Bearer YOUR_JWT_TOKEN
 
 ## Local Development
 
@@ -103,8 +135,31 @@ This API uses SQLite for simplicity. The database file (tasks.db) will be create
 - `JWT_EXPIRES_IN` - JWT token expiration time
 - `DB_NAME` - Database file name
 
+## Environment Variables (Production)
+
+These must be configured in the Render dashboard:
+
+- `NODE_ENV=production`
+- `PORT=3000` (Render may override this automatically)
+- `JWT_SECRET=your-secure-production-key`
+- `JWT_EXPIRES_IN=24h`
+- `DB_NAME=tasks.db`
+
+
 ### Deployment
 This API is ready to deploy to cloud platforms like Render. Make sure to:
 1. Set appropriate environment variables
 2. Use a secure JWT secret in production
 3. Consider database limitations with SQLite
+
+
+## Auto-Deploy Verification
+
+Render automatically redeploys whenever you push to the deployed branch.
+
+To verify auto-deployment:
+
+1. Add or modify a small endpoint (for example, `/api/health`)
+2. Commit and push the change to GitHub
+3. Watch Render’s “Deploy Logs” tab to see the new build start
+4. Once live, test the updated endpoint in Postman to confirm changes deployed successfully
